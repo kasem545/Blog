@@ -58,8 +58,6 @@ I regularly hone my skills on platforms like:
 
 - [Hack The Box](https://app.hackthebox.com/profile/671151)  
 - [TryHackMe](https://tryhackme.com/p/kasemsh)  
-- [OverTheWire](https://overthewire.org/)  
-- [Root Me](https://www.root-me.org/)  
 
 Feel free to check out my profiles to see some of my latest challenges and accomplishments!
 
