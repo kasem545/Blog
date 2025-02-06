@@ -23,6 +23,31 @@ With certifications like **CEH Master**, **eJPT**, **PNPT**, and **eWPT**, I bri
 
 ---
 
+# 🎓 Achievements & Certificates
+
+[Home](index.html#home) | [Whoami](index.html#whoami) | [Cert](cert.html) | [Contact](index.html#contact)
+
+---
+
+## 🏆 Achievements & Certificates
+
+| **Certificate Name** | **Certificate Description** | **Certificate Image** |
+| -------------------- | --------------------------- | --------------------- |
+| **Linux Essentials** | Certified in Linux fundamentals, essential for system administration and scripting. | ![Linux Essentials](/assets/img/post_img/Certificates/lpi.png) |
+| **Python Certified Entry-Level Programmer (PCEP)** | Certified in Python programming basics, emphasizing logic building and problem-solving. | ![PCEP](/assets/img/post_img/Certificates/pcep.png) |
+| **eLearnSecurity Junior Penetration Tester (eJPT)** | Recognized for foundational penetration testing knowledge and practical application. | ![eJPT](/assets/img/post_img/Certificates/ejpt.png) |
+| **Certified Ethical Hacker (CEH)** | Credentialed as a CEH, showcasing skills in identifying vulnerabilities and securing systems. | ![CEH](/assets/img/post_img/Certificates/ceh.png) |
+| **Practical Network Penetration Tester (PNPT)** | Demonstrates proficiency in advanced penetration testing and reporting methodologies. | ![PNPT](/assets/img/post_img/Certificates/pnpt.png) |
+| **eLearnSecurity Web Application Penetration Tester (eWPT)** | Proficient in identifying and exploiting vulnerabilities in web applications. | ![eWPT](/assets/img/post_img/Certificates/ewpt.png) |
+| **HackTheBox FullHouse ProLab** | Step into the HTBCasino, entrusted with ensuring the privacy and security of its players. Your mission is to uncover vulnerabilities in new and legacy components, gain a foothold on the internal network, escalate privileges, and compromise the entire infrastructure—all while collecting flags along the way. | ![HTB FullHouse](/assets/img/post_img/Certificates/htb-fh.png) |
+
+---
+
+*Proud to have earned these certifications, each representing a step forward in my cybersecurity journey. More to come as I continue to grow and tackle new challenges!* 🚀
+
+
+---
+
 ## 🔍 What Drives Me?
 
 I thrive on **solving complex challenges** with creativity and precision. In the ever-evolving world of cybersecurity, staying ahead of threats is both a passion and a responsibility. I am committed to **continuous learning** and **professional growth** to ensure I’m always equipped with the latest skills and knowledge.
