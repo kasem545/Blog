@@ -7,6 +7,7 @@ order: 4
 # 👨‍💻 About Me
 
 **Cybersecurity Enthusiast | Penetration Tester | Network & Web Application Security Specialist**  
+
 **Certified Ethical Hacker Master (CEH Master) | eJPT | PNPT | eWPT**
 
 ---
@@ -25,11 +26,6 @@ With certifications like **CEH Master**, **eJPT**, **PNPT**, and **eWPT**, I bri
 
 # 🎓 Achievements & Certificates
 
-[Home](index.html#home) | [Whoami](index.html#whoami) | [Cert](cert.html) | [Contact](index.html#contact)
-
----
-
-## 🏆 Achievements & Certificates
 
 | **Certificate Name** | **Certificate Description** | **Certificate Image** |
 | -------------------- | --------------------------- | --------------------- |
