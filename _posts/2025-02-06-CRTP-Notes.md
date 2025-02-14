@@ -1,7 +1,7 @@
 ---
 title: CRTP Notes
 date: 2024-12-29 19:40:44 +/-TTTT
-categories: [Certificate]
+categories: [Certificate,Notes]
 tags: [CRTP,AD]     # TAG names should always be lowercase
 ---
 
