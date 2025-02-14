@@ -1,6 +1,6 @@
 ---
 title: OSCP Notes
-date: 2024-02-14 22:20:00 +/-TTTT
+date: 2025-02-14 22:20:00 +/-TTTT
 categories: [Notes]
 tags: [OSCP]     # TAG names should always be lowercase
 ---
