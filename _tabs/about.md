@@ -79,12 +79,9 @@ On this blog, I’ll be sharing:
 
 I love engaging with the cybersecurity community. Whether you have questions, want to collaborate, or just share insights don’t hesitate to reach out!
 
-- [LinkedIn](https://linkedin.com/in/kasemshibli)  
-- [GitHub](https://github.com/kasem545)  
-- [YouTube](#)  
-- [Reddit](#)  
-- [Twitter/X](https://x.com/kasem_shibli)  
-- [Medium](#)  
+- [LinkedIn](https://linkedin.com/in/kasemshibli)
+- [GitHub](https://github.com/kasem545)
+- [Twitter/X](https://x.com/kasem_shibli) 
 
 ---
 
