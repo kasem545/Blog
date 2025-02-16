@@ -83,6 +83,3 @@ I love engaging with the cybersecurity community. Whether you have questions, wa
 - [GitHub](https://github.com/kasem545)
 - [Twitter/X](https://x.com/kasem_shibli) 
 
----
-
-*Let’s make the digital world a safer place, one vulnerability at a time!* 🔐
