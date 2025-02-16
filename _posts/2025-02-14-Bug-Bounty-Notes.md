@@ -1,7 +1,7 @@
 ---
 title: Bug Bounty Notes
 date: 2025-02-14 22:43:00 +/-TTTT
-categories: [Notes]
+categories: [Notes],[BugBounty]
 tags: [BugBounty]
 ---
 # Bug Bounty Handbook
