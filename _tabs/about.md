@@ -70,7 +70,6 @@ On this blog, I’ll be sharing:
 - **Penetration Testing Techniques & Tutorials**
 - **Write-ups** from CTF challenges and labs
 - **Vulnerability Analysis** and how to mitigate them
-- **Cybersecurity News** and industry updates
 - My journey through **certifications** and continuous learning
 
 ---
